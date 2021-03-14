@@ -17,6 +17,9 @@
 		<springfox-version>2.9.2</springfox-version>
 		<javax-validation-version>2.0.1.Final</javax-validation-version>
 		<springdoc-openapi-ui-version>1.5.5</springdoc-openapi-ui-version>
+		<flyway-version>7.7.0</flyway-version>
+		<h2-version>1.4.200</h2-version>
+		<java-melody-version>1.86.0</java-melody-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -72,6 +75,25 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>${flyway-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.bull.javamelody</groupId>
+			<artifactId>javamelody-spring-boot-starter</artifactId>
+			<version>${java-melody-version}</version>
 		</dependency>
 		<!--fix missing import org.springframework.data.domain.Pageable https://github.com/OpenAPITools/openapi-generator/issues/8360-->
 		<dependency>
