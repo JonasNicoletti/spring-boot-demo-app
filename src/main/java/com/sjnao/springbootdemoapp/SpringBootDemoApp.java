@@ -1,4 +1,4 @@
-package com.sjnao.onekoney;
+package com.sjnao.springbootdemoapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,10 +12,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-public class OnekoneyApplication {
+public class SpringBootDemoApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OnekoneyApplication.class, args);
+		SpringApplication.run(SpringBootDemoApp.class, args);
 	}
 
 	@Bean

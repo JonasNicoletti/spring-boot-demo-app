@@ -1,4 +1,4 @@
-package com.sjnao.onekoney.controller;
+package com.sjnao.springbootdemoapp.controller;
 
 import java.util.ArrayList;
 import java.util.List;
