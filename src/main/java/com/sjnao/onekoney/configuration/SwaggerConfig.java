@@ -1,33 +1,37 @@
 package com.sjnao.onekoney.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import springfox.documentation.swagger.web.InMemorySwaggerResourcesProvider;
+import springfox.documentation.swagger.web.SwaggerResource;
+import springfox.documentation.swagger.web.SwaggerResourcesProvider;
+
 @Configuration
-@EnableWebMvc
 public class SwaggerConfig implements WebMvcConfigurer {
-    @Value("${app.swagger-ui.redirectPrefix}")
-    private String redirectPrefix;
+        @Primary
+        @Bean
+        public SwaggerResourcesProvider swaggerResourcesProvider(
+                        InMemorySwaggerResourcesProvider defaultResourcesProvider) {
+                return () -> {
+                        List<SwaggerResource> resources = new ArrayList<>();
+                        Arrays.asList("v1").forEach(resourceName -> resources.add(loadResource(resourceName)));
+                        return resources;
+                };
+        }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addRedirectViewController(redirectPrefix + "/v2/api-docs", "/v2/api-docs");
-        registry.addRedirectViewController(redirectPrefix + "/swagger-resources/configuration/ui",
-                "/swagger-resources/configuration/ui");
-        registry.addRedirectViewController(redirectPrefix + "/swagger-resources/configuration/security",
-                "/swagger-resources/configuration/security");
-        registry.addRedirectViewController(redirectPrefix + "/swagger-resources", "/swagger-resources");
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/" + redirectPrefix + "/swagger-ui.html**")
-                .addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
-        registry.addResourceHandler("/" + redirectPrefix + "/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
+        private SwaggerResource loadResource(String resource) {
+                SwaggerResource wsResource = new SwaggerResource();
+                wsResource.setName(resource);
+                wsResource.setSwaggerVersion("3.0");
+                wsResource.setLocation("/swagger-apis/" + resource + "/openapi.yaml");
+                return wsResource;
+        }
 }
